@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from tt_data import TwitterApi
+import yaml
 
-CONSUMER_KEY = 'put-your-key-here'
-CONSUMER_SECRET = 'put-your-key-here'
-ACCESS_TOKEN = 'put-your-key-here'
-ACCESS_TOKEN_SECRET = 'put-your-key-here'
+with open('app.yaml', 'r') as ymlfile:
+	config = yaml.load(ymlfile)
+
+CONSUMER_KEY = config['api'][0].get('consumer_key')
+CONSUMER_SECRET = config['api'][1].get('consumer_secret')
+ACCESS_TOKEN = config['api'][2].get('access_token')
+ACCESS_TOKEN_SECRET = config['api'][3].get('access_token_secret')
 
 def track(auth):
 	track = ['obama', 'hillary']
@@ -21,5 +25,5 @@ def search(auth, twitterApi):
 if __name__ == '__main__':
 	twitterApi = TwitterApi()
 	auth = twitterApi.authenticate(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
-	# track(auth)
-	search(auth, twitterApi)
+	track(auth)
+	# search(auth, twitterApi)
